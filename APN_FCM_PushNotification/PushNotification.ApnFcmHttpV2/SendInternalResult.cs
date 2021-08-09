@@ -4,7 +4,7 @@ namespace PushNotification.ApnFcmHttpV2
 {
     public class SendInternalResult
     {
-        public bool Ok;
-        public string rawResult;
+        public bool Ok { get; set; }
+        public string rawResult { get; set; }
     }
 }

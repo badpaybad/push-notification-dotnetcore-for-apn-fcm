@@ -17,7 +17,7 @@ namespace PushNotification.ApnFcmHttpV2
     ///         result = sentresult.Ok;
     /// 
     /// </summary>
-    public class FCMsClient:IDisposable
+    public class FCMsClient : IDisposable
     {
 
         public FCMsClient(GcmConfiguration configuration)
@@ -75,23 +75,30 @@ namespace PushNotification.ApnFcmHttpV2
         /// <returns></returns>
         public async Task<SendInternalResult> Send(string deviceIdOrFcmToken, string notiTitle, string notiBody, string dataJson)
         {
-            var payloadData = JObject.Parse(dataJson);
+            var notiObject = new JObject();
+            notiObject["title"] = notiTitle;
+            notiObject["body"] = notiBody;
 
+            var payloadData = JObject.Parse(dataJson);
             payloadData["title"] = notiTitle;
             payloadData["body"] = notiBody;
 
             var r = await SendInternal(new GcmNotification
             {
                 RegistrationIds = new List<string> { deviceIdOrFcmToken },
-                Data = payloadData
+                Data = payloadData,
+                Notification = notiObject
             });
 
             return r;
         }
         public async Task<SendInternalResult> Send(List<string> deviceIdOrFcmTokens, string notiTitle, string notiBody, string dataJson)
         {
-            var payloadData = JObject.Parse(dataJson);
+            var notiObject = new JObject();
+            notiObject["title"] = notiTitle;
+            notiObject["body"] = notiBody;
 
+            var payloadData = JObject.Parse(dataJson);
             payloadData["title"] = notiTitle;
             payloadData["body"] = notiBody;
 
@@ -99,7 +106,7 @@ namespace PushNotification.ApnFcmHttpV2
             {
                 RegistrationIds = deviceIdOrFcmTokens,
                 Data = payloadData,
-                To = deviceIdOrFcmTokens.FirstOrDefault()
+                Notification = notiObject
             });
 
             return r;

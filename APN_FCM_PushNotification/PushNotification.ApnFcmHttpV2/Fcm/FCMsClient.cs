@@ -113,6 +113,7 @@ namespace PushNotification.ApnFcmHttpV2
         }
         async Task<SendInternalResult> SendInternal(GcmNotification notification)
         {
+            var str = string.Empty;
             try
             {
                 var json = notification.GetJson();
@@ -126,9 +127,7 @@ namespace PushNotification.ApnFcmHttpV2
                     Console.WriteLine($"System.Net.HttpStatusCode.Unauthorized {notification}");
                 }
 
-                var str = await response.Content.ReadAsStringAsync();
-
-
+                str = await response.Content.ReadAsStringAsync();
 
                 var responseJson = JObject.Parse(str);
 
@@ -173,7 +172,7 @@ namespace PushNotification.ApnFcmHttpV2
             }
             catch (Exception ex)
             {
-                return new SendInternalResult { Ok = false, rawResult = ex.Message + ex.StackTrace };
+                return new SendInternalResult { Ok = false, rawResult = str + " " + ex.Message + ex.StackTrace };
             }
 
         }

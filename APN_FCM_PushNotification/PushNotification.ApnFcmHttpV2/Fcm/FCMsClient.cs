@@ -75,39 +75,29 @@ namespace PushNotification.ApnFcmHttpV2
         /// <returns></returns>
         public async Task<SendInternalResult> Send(string deviceIdOrFcmToken, string notiTitle, string notiBody, string dataJson)
         {
-            var notiObject = new JObject();
-            notiObject["title"] = notiTitle;
-            notiObject["body"] = notiBody;
-
-            var payloadData = JObject.Parse(dataJson);
-            payloadData["title"] = notiTitle;
-            payloadData["body"] = notiBody;
-
-            var r = await SendInternal(new GcmNotification
-            {
-                RegistrationIds = new List<string> { deviceIdOrFcmToken },
-                Data = payloadData,
-                Notification = notiObject
-            });
-
-            return r;
+            return await Send(new List<string> { deviceIdOrFcmToken }, notiTitle, notiBody, dataJson);
         }
         public async Task<SendInternalResult> Send(List<string> deviceIdOrFcmTokens, string notiTitle, string notiBody, string dataJson)
         {
-            var notiObject = new JObject();
-            notiObject["title"] = notiTitle;
-            notiObject["body"] = notiBody;
 
             var payloadData = JObject.Parse(dataJson);
-            payloadData["title"] = notiTitle;
-            payloadData["body"] = notiBody;
-
-            var r = await SendInternal(new GcmNotification
+            //payloadData["title"] = notiTitle;
+            //payloadData["body"] = notiBody;
+            var msg = new GcmNotification
             {
                 RegistrationIds = deviceIdOrFcmTokens,
                 Data = payloadData,
-                Notification = notiObject
-            });
+            };
+
+            if (!string.IsNullOrEmpty(notiTitle) && !string.IsNullOrEmpty(notiBody))
+            {
+                var notiObject = new JObject();
+                notiObject["title"] = notiTitle;
+                notiObject["body"] = notiBody;
+                msg.Notification = notiObject;
+            }
+
+            var r = await SendInternal(msg);
 
             return r;
         }

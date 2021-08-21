@@ -92,8 +92,8 @@ namespace PushNotification.ApnFcmHttpV2
             if (!string.IsNullOrEmpty(notiTitle) && !string.IsNullOrEmpty(notiBody))
             {
                 var notiObject = new JObject();
-                notiObject["title"] = notiTitle;
-                notiObject["body"] = notiBody;
+                //notiObject["title"] = notiTitle;
+                //notiObject["body"] = notiBody;
                 msg.Notification = notiObject;
             }
 

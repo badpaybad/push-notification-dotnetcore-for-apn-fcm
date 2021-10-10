@@ -34,9 +34,15 @@ Just support send single device_token for app mobile
 
 # setup firebase
 
-                Server side: you have to create prj then get json file for FirebaseAdmin , use it to create custom token
+                Server side: 
+                
+                You have to create prj then get json file for FirebaseAdmin , use it to create custom token
+                Active Authentication for firebase
 
-                Client side: call api login then get custom token, use FirebaseClient lib to do 
+                Client side: 
+                Create prj for web, android, ios 
+                call api login then get custom token, use FirebaseClient lib to do 
+
 
  check image: *.png
  

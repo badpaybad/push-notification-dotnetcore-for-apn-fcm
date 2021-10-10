@@ -122,10 +122,74 @@
 
     }
 
+
+    function PhpGetCustomToken() {
+
+        var deferred = $.Deferred();
+
+        var urlrequest = "http://localhost:8000/api/firebase/getcustomtoken";
+        var data = { uid: "uid", pwd: "pwd" };
+
+        jQuery.ajax({
+            crossDomain: true,
+            type: "POST",
+            contentType: "application/json",
+            dataType: 'json', headers: {
+                //'Authorization': 'Bearer ' + App.token(),
+                //'X-CSRF-TOKEN': 'xxxxxxxxxxxxxxxxxxxx',
+                'Content-Type': 'application/json'
+            },
+            url: urlrequest,
+            data: JSON.stringify(data),
+            success: function (result) {
+                var token = result.customToken;
+                //can do promisse
+                deferred.resolve(token);
+
+                _firebaseCustomToken = token;
+                // should keep your token for the next time request
+
+                console.log(_firebaseCustomToken);
+                //to send to topic: _roomChat1UrlRef
+                // have to signin firebase client with custom token
+
+                roomChat1_Send("Hello, I am Du, php Anonymous");
+
+                _firebaseAuth._signInWithCustomToken(_firebaseAuth, _firebaseCustomToken)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        //console.log(user);
+
+                        roomChat1_Send("Hello, I am Du, php Loged");
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(error);
+                    });
+
+            },
+            error: function (result) {
+                deferred.reject(result);
+            },
+            complete: function (result) {
+                deferred.resolve(result);
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+
+        return deferred.promise();
+
+    }
+
     jQuery(document).ready(function () {
 
         GetCustomToken();
-
+        PhpGetCustomToken();
     })
 
 </script>

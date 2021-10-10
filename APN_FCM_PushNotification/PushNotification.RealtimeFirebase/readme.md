@@ -15,9 +15,16 @@ you have to download and save your json file for FirebaseAdmin. Server will use 
 
 	nuget FirebaseAdmin
 
+				FirebaseWithCustomTokenController.cs
+
+
+				routes\api.php
+
 # client js or android, ios
 
-check file index.html
+check file: PushNotification.RealtimeFirebase\wwwroot\test\index.html
+
+check file : resources\views\welcome.blade.php
 
 
 # create firebase app to get config and use firebase client lib

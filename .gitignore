@@ -348,3 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/APN_FCM_PushNotification/PushNotification.RealtimeFirebase/appsettings.Development.json
+/APN_FCM_PushNotification/PushNotification.RealtimeFirebase/realtimedbtest-d8c6b-firebase-adminsdk-luofp-84667479bc.json

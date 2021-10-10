@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushNotification.ApnFcmHttpV2", "PushNotification.ApnFcmHttpV2\PushNotification.ApnFcmHttpV2.csproj", "{74AA17C9-0672-4D17-A052-79BB743971E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushNotification.ApnFcmHttpV2", "PushNotification.ApnFcmHttpV2\PushNotification.ApnFcmHttpV2.csproj", "{74AA17C9-0672-4D17-A052-79BB743971E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docs", "_docs", "{643C8F7C-F396-4E42-9418-76612D946514}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docs", "_docs", "{643C8F7C
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushNotification.TestConsole", "PushNotification.TestConsole\PushNotification.TestConsole.csproj", "{995FB5D9-2B2A-406E-8DC3-216BF963A660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushNotification.TestConsole", "PushNotification.TestConsole\PushNotification.TestConsole.csproj", "{995FB5D9-2B2A-406E-8DC3-216BF963A660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushNotification.RealtimeFirebase", "PushNotification.RealtimeFirebase\PushNotification.RealtimeFirebase.csproj", "{BA2825FE-9F1F-4D15-829E-CE59D8573187}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FirebaseClient", "FirebaseClient", "{F7064A2C-5E7A-4374-83C2-D24A9AFA14C2}"
+	ProjectSection(SolutionItems) = preProject
+		PushNotification.RealtimeFirebase\wwwroot\test\index.html = PushNotification.RealtimeFirebase\wwwroot\test\index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FirebaseSetup", "FirebaseSetup", "{E5F234BE-54D9-4594-887F-436E140FEB8E}"
+	ProjectSection(SolutionItems) = preProject
+		1.firebaseaddapp.png = 1.firebaseaddapp.png
+		2.firebaseconfig.png = 2.firebaseconfig.png
+		3.firebaseadmin.png = 3.firebaseadmin.png
+		4.firebaseauth.png = 4.firebaseauth.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +43,10 @@ Global
 		{995FB5D9-2B2A-406E-8DC3-216BF963A660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{995FB5D9-2B2A-406E-8DC3-216BF963A660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{995FB5D9-2B2A-406E-8DC3-216BF963A660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA2825FE-9F1F-4D15-829E-CE59D8573187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA2825FE-9F1F-4D15-829E-CE59D8573187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA2825FE-9F1F-4D15-829E-CE59D8573187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA2825FE-9F1F-4D15-829E-CE59D8573187}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

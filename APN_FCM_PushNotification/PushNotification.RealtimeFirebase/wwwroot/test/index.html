@@ -1,0 +1,131 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+    import { getAuth, signInWithCustomToken, signOut } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+    import { getDatabase, ref, set, onValue} from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js';
+    
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAeOXhZrhaadsOIp1e_0tklcnH8H5KfRZ8",
+        authDomain: "realtimedbtest-d8c6b.firebaseapp.com",
+        databaseURL: "https://realtimedbtest-d8c6b-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "realtimedbtest-d8c6b",
+        storageBucket: "realtimedbtest-d8c6b.appspot.com",
+        messagingSenderId: "787425357847",
+        appId: "1:787425357847:web:70987cc599fe6242a92c52"
+    };
+
+    // Initialize Firebase
+    var _firebaseApp = initializeApp(firebaseConfig);
+    var _firebaseAuth = getAuth(_firebaseApp);
+    var _firebaseRealtimeDb = getDatabase(_firebaseApp);
+
+    _firebaseAuth._signInWithCustomToken = signInWithCustomToken;
+
+
+    console.log(_firebaseRealtimeDb);
+    console.log(_firebaseAuth);
+
+    var _roomChat1UrlRef = "test/chat1";
+    var _roomChat1Ref = ref(_firebaseRealtimeDb, _roomChat1UrlRef);
+
+    onValue(_roomChat1Ref, (snapshot) => {
+
+        const data = snapshot.val();
+        if (data == null) return;
+
+        console.log(data);
+        //alert(JSON.stringify( data));
+
+    });
+
+    var _firebaseCustomToken = "";
+
+    function roomChat1_Send(msg) {
+
+        set(_roomChat1Ref, {
+            "name": "nguyen phan du",
+            "msg": msg
+        });
+
+    }
+
+
+    function GetCustomToken() {
+
+        var deferred = $.Deferred();
+
+        var urlrequest = "http://localhost:5000/api/FirebaseWithCustomToken/get";
+        var data = { uid: "uid", pwd: "pwd" };
+
+        jQuery.ajax({
+            crossDomain: true,
+            type: "POST",
+            contentType: "application/json",
+            dataType: 'json', headers: {
+                //'Authorization': 'Bearer ' + App.token(),
+                //'X-CSRF-TOKEN': 'xxxxxxxxxxxxxxxxxxxx',
+                'Content-Type': 'application/json'
+            },
+            url: urlrequest,
+            data: JSON.stringify(data),
+            success: function (result) {
+                var token = result.customToken;
+                //can do promisse
+                deferred.resolve(token);
+
+                _firebaseCustomToken = token;
+                // should keep your token for the next time request
+
+                console.log(_firebaseCustomToken);
+                //to send to topic: _roomChat1UrlRef
+                // have to signin firebase client with custom token
+
+                roomChat1_Send("Hello, I am Du, Anonymous");
+
+                _firebaseAuth._signInWithCustomToken(_firebaseAuth, _firebaseCustomToken)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        //console.log(user);
+
+                        roomChat1_Send("Hello, I am Du, Loged");
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(error);
+                    });
+
+            },
+            error: function (result) {
+                deferred.reject(result);
+            },
+            complete: function (result) {
+                deferred.resolve(result);
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+
+        return deferred.promise();
+
+    }
+
+    jQuery(document).ready(function () {
+
+        GetCustomToken();
+
+    })
+
+</script>
